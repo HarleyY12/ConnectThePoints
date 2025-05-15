@@ -25,8 +25,7 @@ public class GameBoard {
 
         for(int i = 1; i < 5; i++){
             int generate = (int) (Math.random() * 4);
-            if(gameBoard[][] )
-            gameBoard[1][1] = i;
+            gameBoard[1][1] = 5;
 
 
         }
