@@ -38,7 +38,6 @@ public class GameBoard {
         //(0,0), (0,1), (0,2)
         //(4,0), (4,1), (4,2)
         // if length - 1 >= 0 & width = 0;
-        // if length - 1 >= 0 & width = width - 1
 
 
 
