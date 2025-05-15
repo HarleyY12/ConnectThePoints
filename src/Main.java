@@ -8,5 +8,6 @@ public class Main {
         System.out.println(board1.getLength());
         board1.generateBoard();
         System.out.println(Arrays.deepToString(board1.getGameBoard()));
+        System.out.println("start game");
     }
 }
