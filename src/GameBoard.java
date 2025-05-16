@@ -10,8 +10,6 @@ public class GameBoard {
         this.width = width;
         gameBoard = new int[length][width];
 
-
-
     }
     public int getWidth(){
         return width;
@@ -19,16 +17,20 @@ public class GameBoard {
     public int getLength(){
         return length;
     }
+    public int[][] getGameBoard(){
+        return gameBoard;
+    }
     public void generateBoard(){
-        boolean[][] alreadyGenerated = new boolean[length][width];
-
-
-        for(int i = 1; i < 5; i++){
-            int generate = (int) (Math.random() * 4);
-            gameBoard[1][1] = 5;
-
+        int[][] board = new int[length][width];
+        int[] numbers = {1,2,3};
+        for(int column = 0; column < width;column++){
 
         }
+
+
+
+
+
         //length = 5 (row), width = 3(column)
         //generate numbers on left & right
         //(0,0), (1,0), (2,0), (3,0), (4,0)
@@ -37,12 +39,22 @@ public class GameBoard {
         //(0,0), (0,1), (0,2)
         //(4,0), (4,1), (4,2)
         // if length - 1 >= 0 & width = 0;
-
-
-
     }
-    public int[][] getGameBoard(){
-        return gameBoard;
+    public int generateNumber(int[] numbers){
+        int[] numberCounter = new int [numbers.length] ;
+        for(int i = 0; i < numbers.length;i++){
+            numberCounter[i] = 0;
+        }
+        for(int i = 0; i < numberCounter.length;i++){
+
+            while(numberCounter[i] < 2){
+                numberCounter[i] = numberCounter[i] + 1;
+
+                return numberCounter[i];
+
+            }
+        }
+        return 0;
     }
 
 
