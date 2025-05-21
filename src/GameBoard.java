@@ -1,17 +1,23 @@
+import javax.swing.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Arrays;
 
-public class GameBoard {
+public class GameBoard extends JPanel implements MouseListener {
 
     private int width;
     private int length;
     private int[][] gameBoard;
+    private int[][] replicatedBoard;
     private int[] numberList;
     private int[] availableNumbers;
+
     public GameBoard(){
         length = 8;
         width = 8;
         gameBoard = new int[length][width];
-        numberList = new int[]{1, 2, 3, 4, 5, 6};
+        replicatedBoard = new int[length][width];
+        numberList = new int[]{1, 2, 3, 4, 5};
         availableNumbers = new int[numberList.length * 2];
         int j = 0;
         for(int i = 0; i < availableNumbers.length; i = i + 2){
@@ -35,54 +41,48 @@ public class GameBoard {
 
     public void generateBoard(){
         for(int i = 0; i< availableNumbers.length; i++){
-            int column = (int) (Math.random() * width);
-            int row = (int) (Math.random() * length);
-            while(gameBoard[row][column] != 0){
+            int column = 0;
+            int row = 0;
+            //add extra condition to check if position is viable
+            while(gameBoard[row][column] != 0 && !isViablePosition()){
                 column = (int) (Math.random() * width);
                 row = (int) (Math.random() * length);
-            }
-            //check if each successive point can be connected
-            int[] collectedNumbers = new int[availableNumbers.length];
-            collectedNumbers[i] = availableNumbers[i];
-            int test = 5;
-            if(i % 2 == 1 && i < 2){
-                test= 6;
-            }else{
-                test = 7;
             }
             if(gameBoard[row][column] == 0) {
                 gameBoard[row][column] = availableNumbers[i];
             }
         }
     }
-//    public int generateNumber(){
-//        return 0;
-//    }
-//    public void generateBoard1(){
-//
-//        for(int column = 0; column < width;column++){
-//            int returnedNumber = generateNumber();
-//            if(gameBoard[0][column]==0){
-//                gameBoard[0][column] = returnedNumber;
-//            }
-//        }
-//        for(int column = 0; column < width; column++){
-//            int returnedNumber = generateNumber();
-//            if(gameBoard[length-1][column]==0){
-//                gameBoard[length-1][column] = returnedNumber;
-//            }
-//        }
-//        for(int row = 0;row < length;row++){
-//            int returnedNumber = generateNumber();
-//            if(gameBoard[row][0] == 0){
-//                gameBoard[row][0] = returnedNumber;
-//            }
-//        }
-//        for(int row = 0; row < length;row++){
-//            int returnedNumber = generateNumber();
-//            if(gameBoard[row][width-1] == 0){
-//                gameBoard[row][width-1] = returnedNumber;
-//            }
-//        }
-//    }
+    public boolean isViablePosition(){
+
+        return false;
+    }
+
+
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
 }
