@@ -1,15 +1,38 @@
 public class Points {
-    private int number;
+    private int value;
+    private int row;
+    private int column;
     private boolean isConnected;
+    private boolean isSelected;
 
-    public Points(int number){
+    public Points(int value, int row, int column){
+        this.value = value;
+        this.row = row;
+        this.column = column;
         isConnected = false;
-        this.number = number;
-
-
+        isSelected = true;
     }
     public void setConnected(){
-        boolean isConnected = true;
+         isConnected = true;
     }
+    public void setSelected(){
+        isSelected = true;
+    }
+    public int getValue(){
+        return value;
+    }
+    public int getRow(){
+        return row;
+    }
+    public int getColumn(){
+        return column;
+    }
+
+
+
+
+
+
+
 
 }
