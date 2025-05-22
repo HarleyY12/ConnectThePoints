@@ -6,7 +6,7 @@ public class Main {
         board.generateBoard();
 
         board.getGameBoard();
-
+        MainFrame main = new MainFrame("game");
 
 
 

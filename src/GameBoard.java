@@ -13,11 +13,11 @@ public class GameBoard extends JPanel implements MouseListener {
     private int[] availableNumbers;
 
     public GameBoard(){
-        length = 8;
-        width = 8;
+        length = 7;
+        width = 7;
         gameBoard = new int[length][width];
         replicatedBoard = new int[length][width];
-        numberList = new int[]{1, 2, 3, 4, 5};
+        numberList = new int[]{1, 2, 3, 4, 5, 6};
         availableNumbers = new int[numberList.length * 2];
         int j = 0;
         for(int i = 0; i < availableNumbers.length; i = i + 2){
@@ -44,16 +44,28 @@ public class GameBoard extends JPanel implements MouseListener {
             int column = 0;
             int row = 0;
             //add extra condition to check if position is viable
-            while(gameBoard[row][column] != 0 && !isViablePosition()){
+
+            while(gameBoard[row][column] != 0) {
                 column = (int) (Math.random() * width);
                 row = (int) (Math.random() * length);
+            }
+            if(i % 2 == 1){
+                while(isViablePosition(row, column, availableNumbers[i])){
+                    column = (int) (Math.random() * width);
+                    row = (int) (Math.random() * length);
+                }
             }
             if(gameBoard[row][column] == 0) {
                 gameBoard[row][column] = availableNumbers[i];
             }
         }
     }
-    public boolean isViablePosition(){
+
+    public boolean isViablePosition(int row, int column, int number){
+        replicatedBoard[row][column] = number;
+
+
+
 
         return false;
     }

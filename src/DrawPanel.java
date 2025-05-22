@@ -18,6 +18,16 @@ public class DrawPanel extends JPanel implements MouseListener{
         gameOver = false;
 
     }
+    protected void paintComponent(Graphics g){
+        super.paintComponent(g);
+        g.setFont(new Font("Courier New",Font.BOLD,20));
+        g.drawString("Reset",75,400);
+        g.drawRect(70,380,70,30);
+        g.drawString("New Puzzle",270,400);
+        g.drawRect(265,380,127,30);
+
+    }
+
 
 
     @Override
