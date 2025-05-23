@@ -13,8 +13,8 @@ public class GameBoard extends JPanel implements MouseListener {
     private int[] availableNumbers;
 
     public GameBoard(){
-        length = 7;
-        width = 7;
+        length = 8;
+        width = 8;
         gameBoard = new int[length][width];
         replicatedBoard = new int[length][width];
         numberList = new int[]{1, 2, 3, 4, 5, 6};
@@ -37,6 +37,9 @@ public class GameBoard extends JPanel implements MouseListener {
         for(int[] array : gameBoard){
             System.out.println(Arrays.toString(array));
         }
+    }
+    public int[][] getGameBoard1(){
+        return gameBoard;
     }
 
     public void generateBoard(){
@@ -63,15 +66,8 @@ public class GameBoard extends JPanel implements MouseListener {
 
     public boolean isViablePosition(int row, int column, int number){
         replicatedBoard[row][column] = number;
-
-
-
-
         return false;
     }
-
-
-
     @Override
     public void mouseClicked(MouseEvent e) {
 

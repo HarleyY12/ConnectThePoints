@@ -5,11 +5,11 @@ public class MainFrame extends JFrame implements Runnable {
     private DrawPanel p;
     private Thread windowThread;
 
-    public MainFrame(String display) {
+    public MainFrame(String display, GameBoard board) {
         super(display);
-        int frameWidth = 500;
-        int frameHeight = 500;
-        p = new DrawPanel();
+        int frameWidth = 550;
+        int frameHeight = 620;
+        p = new DrawPanel(board);
         this.add(p);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(frameWidth, frameHeight);
