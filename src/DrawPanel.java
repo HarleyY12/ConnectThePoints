@@ -6,18 +6,20 @@ import java.util.ArrayList;
 
 public class DrawPanel extends JPanel implements MouseListener{
     private Rectangle resetButton;
-    private Rectangle resetPuzzleButton;
+    private Rectangle getNewPuzzle;
+    private Rectangle pointsButton;
     private boolean gameOver;
     private GameBoard board;
+    private Points point;
     private int cellSize;
 
 
     public DrawPanel(GameBoard board){
         this.board = board;
-        resetButton = new Rectangle();
-        resetPuzzleButton = new Rectangle();
-//        resetButton = new Rectangle(100,200,100,50);
-//        resetPuzzleButton = new Rectangle(100,400,100,50);
+        point = new Points(1,1,11,0);
+        resetButton = new Rectangle(70,550,70,30);
+        getNewPuzzle = new Rectangle(265,550,127,30);
+        pointsButton = new Rectangle(165,0,120,30);
         gameOver = false;
         addMouseListener(this);
         cellSize = 60;
@@ -31,7 +33,7 @@ public class DrawPanel extends JPanel implements MouseListener{
         g.setFont(new Font("Courier New",Font.BOLD,20));
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < columns; c++){
-                int y = (int) ((r+0.5) * cellSize);
+                int y = (int) ((r+0.7) * cellSize);
                 int x = (int) ((c+0.5) * cellSize);
                 g.drawRect(x,y,cellSize,cellSize);
 
@@ -39,7 +41,7 @@ public class DrawPanel extends JPanel implements MouseListener{
                 if(value != 0){
                     g.setColor(Color.BLUE);
                     g.fillRect(x,y,cellSize,cellSize);
-                    g.setColor(Color.ORANGE);
+                    g.setColor(Color.BLACK);
                     g.drawString(String.valueOf(value),x + 25,y + 35);
                 }
             }
@@ -47,10 +49,12 @@ public class DrawPanel extends JPanel implements MouseListener{
 
         g.setFont(new Font("Courier New",Font.BOLD,20));
         g.setColor(Color.BLACK);
-        g.drawString("Reset",75,550);
-        g.drawRect(70,530,70,30);
-        g.drawString("New Puzzle",270,550);
-        g.drawRect(265,530,127,30);
+        g.drawString("Reset",75,570);
+        g.drawRect(70,550,70,30);
+        g.drawString("New Puzzle",270,570);
+        g.drawRect(265,550,127,30);
+        g.drawString("Points: " + point.getScore() ,170,20);
+        g.drawRect(165,0,150,30);
 
     }
 
@@ -58,7 +62,21 @@ public class DrawPanel extends JPanel implements MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        Point clicked = e.getPoint();
+        if(e.getButton() == 1){
+            if(getNewPuzzle.contains(clicked)){
+                board.generateBoard();
+            }
+            if(resetButton.contains(clicked)){
+                point.increaseScore();
+            }
 
+
+
+
+
+
+        }
     }
 
     @Override

@@ -1,9 +1,4 @@
-import javax.swing.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.Arrays;
-
-public class GameBoard extends JPanel implements MouseListener {
+public class GameBoard {
 
     private int width;
     private int length;
@@ -32,20 +27,16 @@ public class GameBoard extends JPanel implements MouseListener {
     public int getLength(){
         return length;
     }
-
-    public void getGameBoard(){
-        for(int[] array : gameBoard){
-            System.out.println(Arrays.toString(array));
-        }
-    }
     public int[][] getGameBoard1(){
         return gameBoard;
     }
 
     public void generateBoard(){
+        gameBoard = new int[length][width];
         for(int i = 0; i< availableNumbers.length; i++){
-            int column = 0;
-            int row = 0;
+
+            int column = (int) (Math.random() * width);
+            int row = (int) (Math.random() * length);
             //add extra condition to check if position is viable
 
             while(gameBoard[row][column] != 0) {
@@ -66,31 +57,9 @@ public class GameBoard extends JPanel implements MouseListener {
 
     public boolean isViablePosition(int row, int column, int number){
         replicatedBoard[row][column] = number;
+
         return false;
     }
-    @Override
-    public void mouseClicked(MouseEvent e) {
 
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
 
 }
