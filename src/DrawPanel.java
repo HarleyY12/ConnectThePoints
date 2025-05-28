@@ -12,24 +12,26 @@ public class DrawPanel extends JPanel implements MouseListener{
     private GameBoard board;
     private Points point;
     private int cellSize;
+    private int score;
 
 
     public DrawPanel(GameBoard board){
         this.board = board;
-        point = new Points(1,1,11,0);
+        point = new Points(1,1,11);
         resetButton = new Rectangle(70,550,70,30);
         getNewPuzzle = new Rectangle(265,550,127,30);
         pointsButton = new Rectangle(165,0,120,30);
         gameOver = false;
         addMouseListener(this);
         cellSize = 60;
+        score = 0;
 
     }
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         int rows = board.getLength();
         int columns = board.getWidth();
-        int [][] board1 = board.getGameBoard1();
+        int [][] newBoard = board.getGameBoard();
         g.setFont(new Font("Courier New",Font.BOLD,20));
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < columns; c++){
@@ -37,7 +39,7 @@ public class DrawPanel extends JPanel implements MouseListener{
                 int x = (int) ((c+0.5) * cellSize);
                 g.drawRect(x,y,cellSize,cellSize);
 
-                int value = board1[r][c];
+                int value = newBoard[r][c];
                 if(value != 0){
                     g.setColor(Color.BLUE);
                     g.fillRect(x,y,cellSize,cellSize);
@@ -53,7 +55,7 @@ public class DrawPanel extends JPanel implements MouseListener{
         g.drawRect(70,550,70,30);
         g.drawString("New Puzzle",270,570);
         g.drawRect(265,550,127,30);
-        g.drawString("Points: " + point.getScore() ,170,20);
+        g.drawString("Points: " + score,170,20);
         g.drawRect(165,0,150,30);
 
     }
@@ -68,14 +70,8 @@ public class DrawPanel extends JPanel implements MouseListener{
                 board.generateBoard();
             }
             if(resetButton.contains(clicked)){
-                point.increaseScore();
+                score = score + 1;
             }
-
-
-
-
-
-
         }
     }
 

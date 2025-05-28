@@ -12,7 +12,7 @@ public class GameBoard {
         width = 8;
         gameBoard = new int[length][width];
         replicatedBoard = new int[length][width];
-        numberList = new int[]{1, 2, 3, 4, 5, 6};
+        numberList = new int[]{1, 2, 3, 4, 5};
         availableNumbers = new int[numberList.length * 2];
         int j = 0;
         for(int i = 0; i < availableNumbers.length; i = i + 2){
@@ -27,7 +27,7 @@ public class GameBoard {
     public int getLength(){
         return length;
     }
-    public int[][] getGameBoard1(){
+    public int[][] getGameBoard(){
         return gameBoard;
     }
 
@@ -37,12 +37,13 @@ public class GameBoard {
 
             int column = (int) (Math.random() * width);
             int row = (int) (Math.random() * length);
-            //add extra condition to check if position is viable
 
             while(gameBoard[row][column] != 0) {
                 column = (int) (Math.random() * width);
                 row = (int) (Math.random() * length);
             }
+
+            //add extra condition to check if position is viable
             if(i % 2 == 1){
                 while(isViablePosition(row, column, availableNumbers[i])){
                     column = (int) (Math.random() * width);
@@ -56,7 +57,20 @@ public class GameBoard {
     }
 
     public boolean isViablePosition(int row, int column, int number){
-        replicatedBoard[row][column] = number;
+        replicatedBoard = gameBoard;
+        int count = 0;
+        for(int r = 0; r < length; r++) {
+            for (int c = 0; c < width; c++) {
+                if(gameBoard[r][c] == number){
+                    count = count + 1;
+                }
+            }
+        }
+        if(count == 2){
+
+        }
+
+
 
         return false;
     }
