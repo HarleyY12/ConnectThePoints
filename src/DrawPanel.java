@@ -3,6 +3,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DrawPanel extends JPanel implements MouseListener{
     private Rectangle resetButton;
@@ -10,17 +11,17 @@ public class DrawPanel extends JPanel implements MouseListener{
     private Rectangle pointsButton;
     private boolean gameOver;
     private GameBoard board;
-    private Points point;
+    private Nodes point;
     private int cellSize;
     private int score;
     private int selectedRow;
     private int selectedColumn;
-
-
+    private List<Point> points;
+    private ArrayList<Point> selectedPoints;
 
     public DrawPanel(GameBoard board){
         this.board = board;
-        point = new Points(1,1,11);
+        point = new Nodes(1,1,11);
         resetButton = new Rectangle(200,810,70,30);
         getNewPuzzle = new Rectangle(400,810,127,30);
         pointsButton = new Rectangle(300,0,120,30);
@@ -30,7 +31,6 @@ public class DrawPanel extends JPanel implements MouseListener{
         score = 0;
         selectedRow = -1;
         selectedColumn = -1;
-
 
     }
 
@@ -59,22 +59,20 @@ public class DrawPanel extends JPanel implements MouseListener{
                     g.setColor(Color.ORANGE);
                     g.fillRect(x,y,cellSize,cellSize);
                     g.setColor(Color.BLACK);
+                    g.drawString(String.valueOf(value),x + 25,y + 35);
+
                 }
             }
         }
-
         g.setFont(new Font("Courier New",Font.BOLD,20));
         g.setColor(Color.BLACK);
         g.drawString("Reset",205,830);
         g.drawRect(200,810,70,30);
         g.drawString("New Puzzle",405,830);
         g.drawRect(400,810,127,30);
-        g.drawString("Points: " + score,305,20);
-        g.drawRect(300,0,150,30);
+        g.drawString("Score: " + score,305,20);
 
     }
-
-
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -87,11 +85,13 @@ public class DrawPanel extends JPanel implements MouseListener{
                 board.generateBoard();
                 selectedRow = -1;
                 selectedColumn = -1;
+                selectedPoints = new ArrayList<>();
             }
             if(resetButton.contains(clicked)){
                 score = score + 1;
                 selectedRow = -1;
                 selectedColumn = -1;
+                selectedPoints = new ArrayList<>();
             }
             if(column <= board.getWidth() && column >= 0 && row <= board.getLength() && row >=0){
                 selectedRow = row;
@@ -100,26 +100,21 @@ public class DrawPanel extends JPanel implements MouseListener{
                 repaint();
             }
         }
-
     }
+
+
+
 
     @Override
     public void mousePressed(MouseEvent e) {
-
     }
-
     @Override
     public void mouseReleased(MouseEvent e) {
-
     }
-
     @Override
     public void mouseEntered(MouseEvent e) {
-
     }
-
     @Override
     public void mouseExited(MouseEvent e) {
-
     }
 }

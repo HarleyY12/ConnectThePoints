@@ -1,5 +1,5 @@
 
-public class Points  {
+public class Nodes  {
     private int value;
     private int row;
     private int column;
@@ -7,21 +7,21 @@ public class Points  {
     private boolean isSelected;
     private GameBoard board;
 
-    public Points(int value, int row, int column){
+    public Nodes(int value, int row, int column){
         this.value = value;
         this.row = row;
         this.column = column;
         isConnected = false;
         isSelected = true;
     }
-    public Points(int value){
+    public Nodes(int value){
 
         this.value = value;
         isConnected = false;
         isSelected = true;
     }
     public void setConnected(){
-         isConnected = true;
+        isConnected = true;
     }
     public void setSelected(){
         isSelected = true;
@@ -35,14 +35,4 @@ public class Points  {
     public int getColumn(){
         return column;
     }
-
-
-
-
-
-
-
-
-
-
 }
