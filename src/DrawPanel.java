@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class DrawPanel extends JPanel implements MouseListener{
     private Rectangle resetButton;
     private Rectangle getNewPuzzle;
@@ -14,10 +15,12 @@ public class DrawPanel extends JPanel implements MouseListener{
     private Nodes point;
     private int cellSize;
     private int score;
-    private int selectedRow;
-    private int selectedColumn;
-    private List<Point> points;
-    private ArrayList<Point> selectedPoints;
+
+
+    private boolean hasStartedSelection;
+    private int selectedValue;
+    private List<Point> selectedPoints;
+
 
     public DrawPanel(GameBoard board){
         this.board = board;
@@ -29,9 +32,9 @@ public class DrawPanel extends JPanel implements MouseListener{
         addMouseListener(this);
         cellSize = 60;
         score = 0;
-        selectedRow = -1;
-        selectedColumn = -1;
-
+        hasStartedSelection = false;
+        selectedValue = -1;
+        selectedPoints = new ArrayList<>();
     }
 
 
@@ -41,6 +44,7 @@ public class DrawPanel extends JPanel implements MouseListener{
         int columns = board.getWidth();
         int [][] newBoard = board.getGameBoard();
 
+
         g.setFont(new Font("Courier New",Font.BOLD,20));
         for(int r = 0; r < rows; r++){
             for(int c = 0; c < columns; c++){
@@ -49,19 +53,20 @@ public class DrawPanel extends JPanel implements MouseListener{
                 int value = newBoard[r][c];
                 g.drawRect(x,y,cellSize,cellSize);
 
+
                 if(value != 0){
                     g.setColor(Color.BLUE);
                     g.fillRect(x,y,cellSize,cellSize);
                     g.setColor(Color.BLACK);
                     g.drawString(String.valueOf(value),x + 25,y + 35);
                 }
-                if(r == selectedRow && c == selectedColumn){
-                    g.setColor(Color.ORANGE);
-                    g.fillRect(x,y,cellSize,cellSize);
-                    g.setColor(Color.BLACK);
-                    g.drawString(String.valueOf(value),x + 25,y + 35);
-
-                }
+//                if(r == selectedRow && c == selectedColumn){
+//                    g.setColor(Color.ORANGE);
+//                    g.fillRect(x,y,cellSize,cellSize);
+//                    g.setColor(Color.BLACK);
+//                    g.drawString(String.valueOf(value),x + 25,y + 35);
+//
+//                }
             }
         }
         g.setFont(new Font("Courier New",Font.BOLD,20));
@@ -72,7 +77,9 @@ public class DrawPanel extends JPanel implements MouseListener{
         g.drawRect(400,810,127,30);
         g.drawString("Score: " + score,305,20);
 
+
     }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -80,29 +87,26 @@ public class DrawPanel extends JPanel implements MouseListener{
         int row = (clicked.y - (int)(0.7 * cellSize))/cellSize;
         int column = (clicked.x - (int)(0.5 * cellSize))/cellSize;
 
+
         if(e.getButton() == 1){
             if(getNewPuzzle.contains(clicked)){
                 board.generateBoard();
-                selectedRow = -1;
-                selectedColumn = -1;
-                selectedPoints = new ArrayList<>();
+
+
             }
             if(resetButton.contains(clicked)){
                 score = score + 1;
-                selectedRow = -1;
-                selectedColumn = -1;
-                selectedPoints = new ArrayList<>();
+
+
             }
             if(column <= board.getWidth() && column >= 0 && row <= board.getLength() && row >=0){
-                selectedRow = row;
-                selectedColumn = column;
-                System.out.println("row " + selectedRow + " col " + selectedColumn);
+//                selectedRow = row;
+//                selectedColumn = column;
+//                System.out.println("row " + selectedRow + " col " + selectedColumn);
                 repaint();
             }
         }
     }
-
-
 
 
     @Override
@@ -118,3 +122,4 @@ public class DrawPanel extends JPanel implements MouseListener{
     public void mouseExited(MouseEvent e) {
     }
 }
+
