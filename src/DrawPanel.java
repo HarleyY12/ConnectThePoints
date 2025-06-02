@@ -16,10 +16,13 @@ public class DrawPanel extends JPanel implements MouseListener{
     private int cellSize;
     private int score;
 
+    private int selectedRow;
+    private int selectedColumn;
 
     private boolean hasStartedSelection;
     private int selectedValue;
     private List<Point> selectedPoints;
+    private List<Point> originalPoints;
 
 
     public DrawPanel(GameBoard board){
@@ -35,15 +38,17 @@ public class DrawPanel extends JPanel implements MouseListener{
         hasStartedSelection = false;
         selectedValue = -1;
         selectedPoints = new ArrayList<>();
-    }
+        originalPoints = new ArrayList<>();
 
+        selectedRow = -1;
+        selectedColumn = -1;
+    }
 
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         int rows = board.getLength();
         int columns = board.getWidth();
         int [][] newBoard = board.getGameBoard();
-
 
         g.setFont(new Font("Courier New",Font.BOLD,20));
         for(int r = 0; r < rows; r++){
@@ -53,20 +58,25 @@ public class DrawPanel extends JPanel implements MouseListener{
                 int value = newBoard[r][c];
                 g.drawRect(x,y,cellSize,cellSize);
 
-
-                if(value != 0){
+                if(value != 0 ){
                     g.setColor(Color.BLUE);
                     g.fillRect(x,y,cellSize,cellSize);
                     g.setColor(Color.BLACK);
                     g.drawString(String.valueOf(value),x + 25,y + 35);
                 }
-//                if(r == selectedRow && c == selectedColumn){
-//                    g.setColor(Color.ORANGE);
-//                    g.fillRect(x,y,cellSize,cellSize);
-//                    g.setColor(Color.BLACK);
-//                    g.drawString(String.valueOf(value),x + 25,y + 35);
-//
-//                }
+                if(r == selectedRow && c == selectedColumn){
+                    g.setColor(Color.ORANGE);
+                    g.fillRect(x,y,cellSize,cellSize);
+                    g.setColor(Color.BLACK);
+                    g.drawString(String.valueOf(value),x + 25,y + 35);
+                }
+                if(value != 0 && board.isOriginalPosition(r,c)){
+                    originalPoints.add(new Point(r,c));
+                }
+                if(value != 0 && !board.isOriginalPosition(r,c)){
+                    selectedPoints.add(new Point(r,c));
+                }
+
             }
         }
         g.setFont(new Font("Courier New",Font.BOLD,20));
@@ -80,34 +90,38 @@ public class DrawPanel extends JPanel implements MouseListener{
 
     }
 
-
     @Override
     public void mouseClicked(MouseEvent e) {
         Point clicked = e.getPoint();
         int row = (clicked.y - (int)(0.7 * cellSize))/cellSize;
         int column = (clicked.x - (int)(0.5 * cellSize))/cellSize;
 
-
         if(e.getButton() == 1){
             if(getNewPuzzle.contains(clicked)){
                 board.generateBoard();
-
-
+                selectedRow = -1;
+                selectedColumn = -1;
+                selectedValue = -1;
+                selectedPoints = new ArrayList<>();
+                originalPoints = new ArrayList<>();
             }
             if(resetButton.contains(clicked)){
                 score = score + 1;
-
-
+                selectedRow = -1;
+                selectedColumn = -1;
+                selectedValue = -1;
+                selectedPoints = new ArrayList<>();
+                originalPoints = new ArrayList<>();
             }
-            if(column <= board.getWidth() && column >= 0 && row <= board.getLength() && row >=0){
-//                selectedRow = row;
-//                selectedColumn = column;
-//                System.out.println("row " + selectedRow + " col " + selectedColumn);
+            if(column <= board.getWidth() && column >= 0 && row <= board.getLength() && row >=0 ){
+                selectedRow = row;
+                selectedColumn = column;
+
+                System.out.println("row: " + selectedRow + " col: " + selectedColumn);
                 repaint();
             }
         }
     }
-
 
     @Override
     public void mousePressed(MouseEvent e) {
