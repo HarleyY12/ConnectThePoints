@@ -22,7 +22,6 @@ public class DrawPanel extends JPanel implements MouseListener{
     private boolean hasStartedSelection;
     private int selectedValue;
     private List<Point> selectedPoints;
-    private List<Point> originalPoints;
 
 
     public DrawPanel(GameBoard board){
@@ -38,7 +37,6 @@ public class DrawPanel extends JPanel implements MouseListener{
         hasStartedSelection = false;
         selectedValue = -1;
         selectedPoints = new ArrayList<>();
-        originalPoints = new ArrayList<>();
 
         selectedRow = -1;
         selectedColumn = -1;
@@ -70,15 +68,17 @@ public class DrawPanel extends JPanel implements MouseListener{
                     g.setColor(Color.BLACK);
                     g.drawString(String.valueOf(value),x + 25,y + 35);
                 }
-                if(value != 0 && board.isOriginalPosition(r,c)){
-                    originalPoints.add(new Point(r,c));
-                }
                 if(value != 0 && !board.isOriginalPosition(r,c)){
                     selectedPoints.add(new Point(r,c));
                 }
 
+
             }
         }
+
+
+
+
         g.setFont(new Font("Courier New",Font.BOLD,20));
         g.setColor(Color.BLACK);
         g.drawString("Reset",205,830);
@@ -103,7 +103,6 @@ public class DrawPanel extends JPanel implements MouseListener{
                 selectedColumn = -1;
                 selectedValue = -1;
                 selectedPoints = new ArrayList<>();
-                originalPoints = new ArrayList<>();
             }
             if(resetButton.contains(clicked)){
                 score = score + 1;
@@ -111,13 +110,15 @@ public class DrawPanel extends JPanel implements MouseListener{
                 selectedColumn = -1;
                 selectedValue = -1;
                 selectedPoints = new ArrayList<>();
-                originalPoints = new ArrayList<>();
             }
-            if(column <= board.getWidth() && column >= 0 && row <= board.getLength() && row >=0 ){
+            if(column <= board.getWidth() && column >= 0 && row <= board.getLength() && row >=0
+                    && board.isOriginalPosition(row,column)){
                 selectedRow = row;
                 selectedColumn = column;
-
+                selectedPoints.add(new Point(column,row));
+                hasStartedSelection = true;
                 System.out.println("row: " + selectedRow + " col: " + selectedColumn);
+
                 repaint();
             }
         }

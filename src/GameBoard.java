@@ -13,7 +13,7 @@ public class GameBoard {
         width = 12;
         gameBoard = new int[length][width];
         isOriginal = new boolean[length][width];
-        numberList = new int[]{1, 2, 3, 4, 5};
+        numberList = new int[]{1, 2, 3, 4, 5, 6};
         availableNumbers = new int[numberList.length * 2];
         int j = 0;
         for(int i = 0; i < availableNumbers.length; i = i + 2){
