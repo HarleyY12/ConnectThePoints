@@ -16,8 +16,6 @@ public class DrawPanel extends JPanel implements MouseListener{
     private int cellSize;
     private int score;
 
-    private int selectedRow;
-    private int selectedColumn;
 
     private boolean hasStartedSelection;
     private int selectedValue;
@@ -34,12 +32,10 @@ public class DrawPanel extends JPanel implements MouseListener{
         addMouseListener(this);
         cellSize = 60;
         score = 0;
+
         hasStartedSelection = false;
         selectedValue = -1;
         selectedPoints = new ArrayList<>();
-
-        selectedRow = -1;
-        selectedColumn = -1;
     }
 
     protected void paintComponent(Graphics g){
@@ -47,6 +43,7 @@ public class DrawPanel extends JPanel implements MouseListener{
         int rows = board.getLength();
         int columns = board.getWidth();
         int [][] newBoard = board.getGameBoard();
+
 
         g.setFont(new Font("Courier New",Font.BOLD,20));
         for(int r = 0; r < rows; r++){
@@ -56,28 +53,21 @@ public class DrawPanel extends JPanel implements MouseListener{
                 int value = newBoard[r][c];
                 g.drawRect(x,y,cellSize,cellSize);
 
-                if(value != 0 ){
+                if(selectedPoints.contains(new Point(r,c))) {
+                    g.setColor(Color.ORANGE);
+                    g.fillRect(x, y, cellSize, cellSize);
+                    g.setColor(Color.BLACK);
+                    g.drawString(String.valueOf(selectedValue), x + 25, y + 35);
+                }else if(value != 0){
                     g.setColor(Color.BLUE);
                     g.fillRect(x,y,cellSize,cellSize);
                     g.setColor(Color.BLACK);
                     g.drawString(String.valueOf(value),x + 25,y + 35);
-                }
-                if(r == selectedRow && c == selectedColumn){
-                    g.setColor(Color.ORANGE);
-                    g.fillRect(x,y,cellSize,cellSize);
-                    g.setColor(Color.BLACK);
-                    g.drawString(String.valueOf(value),x + 25,y + 35);
-                }
-                if(value != 0 && !board.isOriginalPosition(r,c)){
-                    selectedPoints.add(new Point(r,c));
-                }
 
+                }
 
             }
         }
-
-
-
 
         g.setFont(new Font("Courier New",Font.BOLD,20));
         g.setColor(Color.BLACK);
@@ -99,27 +89,35 @@ public class DrawPanel extends JPanel implements MouseListener{
         if(e.getButton() == 1){
             if(getNewPuzzle.contains(clicked)){
                 board.generateBoard();
-                selectedRow = -1;
-                selectedColumn = -1;
                 selectedValue = -1;
                 selectedPoints = new ArrayList<>();
+                hasStartedSelection = false;
             }
             if(resetButton.contains(clicked)){
                 score = score + 1;
-                selectedRow = -1;
-                selectedColumn = -1;
                 selectedValue = -1;
                 selectedPoints = new ArrayList<>();
+                hasStartedSelection = false;
             }
-            if(column <= board.getWidth() && column >= 0 && row <= board.getLength() && row >=0
-                    && board.isOriginalPosition(row,column)){
-                selectedRow = row;
-                selectedColumn = column;
-                selectedPoints.add(new Point(column,row));
-                hasStartedSelection = true;
-                System.out.println("row: " + selectedRow + " col: " + selectedColumn);
-
-                repaint();
+            if(column <= board.getWidth() && column >= 0 && row <= board.getLength() && row >=0){
+                int [][] game = board.getGameBoard();
+                int cell = game[row][column];
+                Point point = new Point(row,column);
+                if(!hasStartedSelection){
+                    if(cell > 0){
+                        hasStartedSelection = true;
+                        selectedValue = cell;
+                        selectedPoints = new ArrayList<>();
+                        repaint();
+                    }
+                }
+                else{
+                    if(cell == 0 && selectedPoints.contains(point)){
+                        game[row][column] = selectedValue;
+                        selectedPoints.add(point);
+                        repaint();
+                    }
+                }
             }
         }
     }
