@@ -103,7 +103,7 @@ public class DrawPanel extends JPanel implements MouseListener{
                 int [][] game = board.getGameBoard();
                 int cell = game[row][column];
                 Point point = new Point(row,column);
-                if(!hasStartedSelection){
+                if(!hasStartedSelection || cell > 0){
                     if(cell > 0){
                         hasStartedSelection = true;
                         selectedValue = cell;
@@ -112,7 +112,7 @@ public class DrawPanel extends JPanel implements MouseListener{
                     }
                 }
                 else{
-                    if(cell == 0 && selectedPoints.contains(point)){
+                    if(cell == 0 && !selectedPoints.contains(point)){
                         game[row][column] = selectedValue;
                         selectedPoints.add(point);
                         repaint();
