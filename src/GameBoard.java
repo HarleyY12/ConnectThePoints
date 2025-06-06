@@ -3,6 +3,7 @@ public class GameBoard {
     private int width;
     private int length;
     private int[][] gameBoard;
+    private int[][] originalBoard;
     private boolean [][] isOriginal;
     private int[] numberList;
     private int[] availableNumbers;
@@ -12,6 +13,7 @@ public class GameBoard {
         length = 12;
         width = 12;
         gameBoard = new int[length][width];
+        originalBoard = new int[length][width];
         isOriginal = new boolean[length][width];
         numberList = new int[]{1, 2, 3, 4, 5, 6};
         availableNumbers = new int[numberList.length * 2];
@@ -37,6 +39,7 @@ public class GameBoard {
 
     public void generateBoard(){
         gameBoard = new int[length][width];
+        originalBoard = new int[length][width];
         isOriginal = new boolean[length][width];
         for(int i = 0; i< availableNumbers.length; i++){
 
@@ -50,7 +53,15 @@ public class GameBoard {
 
             if(gameBoard[row][column] == 0) {
                 gameBoard[row][column] = availableNumbers[i];
+                originalBoard[row][column] = availableNumbers[i];
                 isOriginal[row][column] = true;
+            }
+        }
+    }
+    public void resetToOriginal(){
+        for (int r = 0; r < gameBoard.length; r++){
+            for(int c = 0; c < gameBoard[0].length; c++){
+                gameBoard[r][c] = originalBoard[r][c];
             }
         }
     }

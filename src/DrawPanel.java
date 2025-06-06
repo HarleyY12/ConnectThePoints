@@ -20,7 +20,16 @@ public class DrawPanel extends JPanel implements MouseListener{
     private boolean hasStartedSelection;
     private int selectedValue;
     private List<Point> selectedPoints;
+    private Color[] colorList = {
+            Color.RED, Color.BLUE, Color.CYAN, Color.ORANGE, Color.PINK,
+            Color.MAGENTA, Color.YELLOW, Color.GREEN };
 
+    private Color getColor(int value){
+        if(value <= 0 || value > colorList.length){
+            return Color.GRAY;
+        }
+        return colorList[value - 1];
+    }
 
     public DrawPanel(GameBoard board){
         this.board = board;
@@ -54,12 +63,12 @@ public class DrawPanel extends JPanel implements MouseListener{
                 g.drawRect(x,y,cellSize,cellSize);
 
                 if(selectedPoints.contains(new Point(r,c))) {
-                    g.setColor(Color.ORANGE);
+                    g.setColor(getColor(selectedValue));
                     g.fillRect(x, y, cellSize, cellSize);
                     g.setColor(Color.BLACK);
                     g.drawString(String.valueOf(selectedValue), x + 25, y + 35);
                 }else if(value != 0){
-                    g.setColor(Color.BLUE);
+                    g.setColor(getColor(value));
                     g.fillRect(x,y,cellSize,cellSize);
                     g.setColor(Color.BLACK);
                     g.drawString(String.valueOf(value),x + 25,y + 35);
@@ -98,6 +107,8 @@ public class DrawPanel extends JPanel implements MouseListener{
                 selectedValue = -1;
                 selectedPoints = new ArrayList<>();
                 hasStartedSelection = false;
+                board.resetToOriginal();
+
             }
             if(column <= board.getWidth() && column >= 0 && row <= board.getLength() && row >=0){
                 int [][] game = board.getGameBoard();

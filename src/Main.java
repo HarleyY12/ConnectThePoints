@@ -4,5 +4,6 @@ public class Main {
         GameBoard board = new GameBoard();
         board.generateBoard();
         MainFrame main = new MainFrame("Connections", board);
+
     }
 }
