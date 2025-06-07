@@ -12,10 +12,8 @@ public class DrawPanel extends JPanel implements MouseListener{
     private Rectangle pointsButton;
     private boolean gameOver;
     private GameBoard board;
-    private Nodes point;
     private int cellSize;
     private int score;
-
 
     private boolean hasStartedSelection;
     private int selectedValue;
@@ -33,9 +31,8 @@ public class DrawPanel extends JPanel implements MouseListener{
 
     public DrawPanel(GameBoard board){
         this.board = board;
-        point = new Nodes(1,1,11);
-        resetButton = new Rectangle(200,810,70,30);
-        getNewPuzzle = new Rectangle(400,810,127,30);
+        resetButton = new Rectangle(200,0,70,30);
+        getNewPuzzle = new Rectangle(450,0,127,30);
         pointsButton = new Rectangle(300,0,120,30);
         gameOver = false;
         addMouseListener(this);
@@ -52,6 +49,7 @@ public class DrawPanel extends JPanel implements MouseListener{
         int rows = board.getLength();
         int columns = board.getWidth();
         int [][] newBoard = board.getGameBoard();
+
 
 
         g.setFont(new Font("Courier New",Font.BOLD,20));
@@ -74,16 +72,14 @@ public class DrawPanel extends JPanel implements MouseListener{
                     g.drawString(String.valueOf(value),x + 25,y + 35);
 
                 }
-
             }
         }
-
         g.setFont(new Font("Courier New",Font.BOLD,20));
         g.setColor(Color.BLACK);
-        g.drawString("Reset",205,830);
-        g.drawRect(200,810,70,30);
-        g.drawString("New Puzzle",405,830);
-        g.drawRect(400,810,127,30);
+        g.drawString("Reset",205,20);
+        g.drawRect(200,5,70,30);
+        g.drawString("New Puzzle",455,20);
+        g.drawRect(450,5,127,30);
         g.drawString("Score: " + score,305,20);
 
 
@@ -103,7 +99,6 @@ public class DrawPanel extends JPanel implements MouseListener{
                 hasStartedSelection = false;
             }
             if(resetButton.contains(clicked)){
-                score = score + 1;
                 selectedValue = -1;
                 selectedPoints = new ArrayList<>();
                 hasStartedSelection = false;
