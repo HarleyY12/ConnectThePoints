@@ -14,6 +14,7 @@ public class DrawPanel extends JPanel implements MouseListener{
     private GameBoard board;
     private int cellSize;
     private int score;
+    private Connector connector;
 
     private boolean hasStartedSelection;
     private int selectedValue;
@@ -31,6 +32,8 @@ public class DrawPanel extends JPanel implements MouseListener{
 
     public DrawPanel(GameBoard board){
         this.board = board;
+        connector = new Connector(board);
+
         resetButton = new Rectangle(200,0,70,30);
         getNewPuzzle = new Rectangle(450,0,127,30);
         pointsButton = new Rectangle(300,0,120,30);
@@ -76,11 +79,11 @@ public class DrawPanel extends JPanel implements MouseListener{
         }
         g.setFont(new Font("Courier New",Font.BOLD,20));
         g.setColor(Color.BLACK);
-        g.drawString("Reset",205,20);
+        g.drawString("Reset",205,23);
         g.drawRect(200,5,70,30);
-        g.drawString("New Puzzle",455,20);
+        g.drawString("New Puzzle",455,23);
         g.drawRect(450,5,127,30);
-        g.drawString("Score: " + score,305,20);
+        g.drawString("Score: " + score,305,23);
 
 
     }
@@ -91,18 +94,21 @@ public class DrawPanel extends JPanel implements MouseListener{
         int row = (clicked.y - (int)(0.7 * cellSize))/cellSize;
         int column = (clicked.x - (int)(0.5 * cellSize))/cellSize;
 
+
         if(e.getButton() == 1){
             if(getNewPuzzle.contains(clicked)){
                 board.generateBoard();
                 selectedValue = -1;
                 selectedPoints = new ArrayList<>();
                 hasStartedSelection = false;
+                score = 0;
             }
             if(resetButton.contains(clicked)){
                 selectedValue = -1;
                 selectedPoints = new ArrayList<>();
                 hasStartedSelection = false;
                 board.resetToOriginal();
+                score = 0;
 
             }
             if(column <= board.getWidth() && column >= 0 && row <= board.getLength() && row >=0){
@@ -114,6 +120,7 @@ public class DrawPanel extends JPanel implements MouseListener{
                         hasStartedSelection = true;
                         selectedValue = cell;
                         selectedPoints = new ArrayList<>();
+
                         repaint();
                     }
                 }
@@ -124,6 +131,8 @@ public class DrawPanel extends JPanel implements MouseListener{
                         repaint();
                     }
                 }
+                score = score + connector.calculateScore(selectedValue,selectedPoints);
+                System.out.println(score);
             }
         }
     }
