@@ -14,16 +14,33 @@ public class Connector {
 
     public int calculateScore(int value, List<Point> points){
        int maxPoints = 100;
-       int minPoints = 0;
+       int minPoints = 1;
+       int [][] game = board.getGameBoard();
        if(points.size() <= 2){
            return minPoints;
        }
-       if(!connectedValues[value] && points.getFirst() != points.getLast()){
-           return minPoints;
+       if(value > maxValue || connectedValues[value]){
+           return 0;
+       }
+       if(!board.isOriginalPosition(points.get(0).x,points.get(0).y) ||
+       !board.isOriginalPosition(points.getLast().x,points.getLast().y)){
+           return 0;
+       }
+       if(game[points.get(0).x][points.get(0).y] != value ||
+               game[points.getLast().x][points.getLast().y] != value) {
+           return 0;
+       }
+       for(int i = 1; i < points.size()-1;i++){
+           Point p = points.get(i);
+           int cellValue = game[p.x][p.y];
+           if(cellValue != 0 && cellValue != value){
+               return 0;
+           }
+
        }
 
        connectedValues[value] = true;
-       int addedPoints = Math.min(maxPoints,maxPoints-(points.size()-2));
+       int addedPoints = Math.max(minPoints,maxPoints-(points.size()-2));
        return addedPoints;
     }
 }
