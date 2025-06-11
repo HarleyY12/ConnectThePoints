@@ -6,7 +6,6 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class DrawPanel extends JPanel implements MouseListener, MouseMotionListener {
     private Connector connector;
     private Rectangle resetButton;
@@ -17,7 +16,6 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
     private int score;
     private int selectedValue;
     private boolean hasStartedSelection;
-
     private List<Point> selectedPoints;
     private List<Point> draggedPoints;
 
@@ -170,7 +168,6 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
         draggedPoints = new ArrayList<>();
         repaint();
     }
-
 
     @Override
     public void mouseEntered(MouseEvent e) {
